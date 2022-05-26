@@ -28,7 +28,7 @@ Script for training an ANN to compute the parameters of the SGR model (including
 
 ### `sgr_synthetic.py`
 
-Script for training a set of ANNs to compute the parameters of the SGR model from synthetic MAPS data (with tone sets [(5,6,9)](data/synthetic/SGR_data_tensorial_569.mat) and [(1,4,16)](data/synthetic_SGR_data.tensorial_1416.mat)).
+Script for training a set of ANNs to compute the parameters of the SGR model from synthetic MAPS data (with tone sets [(5,6,9)](data/synthetic/SGR_data_tensorial_569.mat) and [(1,4,16)](data/synthetic_SGR_data_tensorial_1416.mat)).
 
 ### `data`
 
