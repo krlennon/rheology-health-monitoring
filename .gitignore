@@ -160,4 +160,4 @@ cython_debug/
 #.idea/
 
 # Also store file
-*/.DS_Store
+**/.DS_Store
