@@ -6,7 +6,7 @@ Directory containing all data and data generating scripts.
 
 ### `maps`
 
-Directory containing two files with raw MAPS data, both in stress control with a tone set of (5,6,9). One [file](maps/maps_005Pa_02rads_5min.txt) contains data for an amplitude of 0.5 Pa, and the [other](maps/maps_01Pa_02rads_5min.txt) contains data for an amplitude of 0.1 Pa. Both experiments used a fundamental frequency of 0.2 rad/s, and both collect data every five minutes.
+Directory containing two files with raw MAPS data, both in stress control with a tone set of (5,6,9). One [file](maps/maps_005Pa_02rads_5min.txt) contains data for an amplitude of 0.05 Pa, and the [other](maps/maps_01Pa_02rads_5min.txt) contains data for an amplitude of 0.1 Pa. Both experiments used a fundamental frequency of 0.2 rad/s, and both collect data every five minutes.
 
 ### `saos`
 
