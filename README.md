@@ -18,6 +18,30 @@ Preprocessed MAPS data, containing the values of the first and third order commp
 
 Short script to process [raw MAPS data](data/maps). 
 
+### `sgr_lr.py`
+
+Script for training an ANN to compute the parameters of the SGR model (including the noise temperature) from SAOS frequency sweep data. The ANN is trained on [synthetic SAOS data](data/synthetic/SGR_LR.mat). A pre-trained ANN is found [here](model_lr).
+
+### `sgr_maps.py`
+
+Script for training an ANN to compute the parameters of the SGR model (including the noise temperature) from a single MAPS experiment. The ANN is trained on [synthetic MAPS data](data/synthetic/SGR_data_tensorial_569.mat). A pre-trained ANN is found [here](model_maps).
+
+### `sgr_synthetic.py`
+
+Script for training a set of ANNs to compute the parameters of the SGR model from synthetic MAPS data (with tone sets [(5,6,9)](data/synthetic/SGR_data_tensorial_569.mat) and [(1,4,16)](data/synthetic_SGR_data.tensorial_1416.mat)).
+
+### `data`
+
+Contains all of the raw data and scripts to generate synthetic data (see the subdirectory [README](data/README.md)).
+
+### `model_lr`
+
+Trained Keras model for determining SGR parameters from SAOS data.
+
+### `model_maps`
+
+Trained Keras model for determining SGR parameters from MAPS data.
+
 ## Contibuting
 
 Inquiries and suggestions can be directed to krlennon[at]mit.edu.
