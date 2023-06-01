@@ -1,9 +1,10 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+from matplotlib.ticker import MultipleLocator
 
 data_all = []
-for k in range(1,9):
+for k in range(1,3):
     w0 = 0.2 # Fundamental frequency
 
     # Loop through amplitudes
@@ -12,7 +13,7 @@ for k in range(1,9):
     strainFTs = []
     for amp in ["005", "01"]:
         # Read data
-        df = pd.read_csv(f"data/maps/maps_{amp}Pa_2rads_{k}.csv", header=None)
+        df = pd.read_csv(f"data/maps/maps_{amp}Pa_02rads_{k}.csv", header=None)
         data = df.to_numpy()
         t = data[:,3]
         strain = data[:,4]
@@ -25,10 +26,57 @@ for k in range(1,9):
         strain = strain[I:]
         stress = stress[I:]
 
+        fig_width = 6.4
+        fig_height = 3
+        fig, ax = plt.subplots(figsize=(fig_width, fig_height))
+        ax.plot(t,stress,'r')
+        ax.set_xlim([t[0],t[-1]])
+        ax.xaxis.set_minor_locator(MultipleLocator(4))
+        ax.tick_params(axis="both",which="both",direction="in",top="true",right="true")
+        fig.suptitle(f"{amp}_stress")
+        fig2, ax2 = plt.subplots(figsize=(fig_width, fig_height))
+        ax2.plot(t,strain - np.mean(strain),'b')
+        ax2.set_xlim([t[0],t[-1]])
+        ax2.xaxis.set_minor_locator(MultipleLocator(4))
+        ax2.tick_params(axis="both",which="both",direction="in",top="true",right="true")
+        fig2.suptitle(f"{amp}_strain")
+
         # FFT
+        print([t[0], t[-1], len(t)])
         ws += [2*np.pi*np.fft.rfftfreq(len(t), (t[-1] - t[0])/(len(t) - 1))]
         stressFTs += [2*np.pi*np.fft.rfft(stress)/len(t)]
         strainFTs += [2*np.pi*np.fft.rfft(strain)/len(t)]
+
+        fig3, ax3 = plt.subplots(figsize=(fig_width, fig_height))
+        fig4, ax4 = plt.subplots(figsize=(fig_width, fig_height))
+        ax3.semilogy(ws[-1][::1]/w0, np.abs(np.real(stressFTs[-1][::1])), 'r')
+        ax3_twin = ax3.twinx()
+        ax3_twin.semilogy(ws[-1][::1]/w0, np.abs(np.real(strainFTs[-1][::1])), 'b')
+
+        ax4.semilogy(ws[-1][::1]/w0, np.abs(np.imag(stressFTs[-1][::1])), 'r')
+        ax4_twin = ax4.twinx()
+        ax4_twin.semilogy(ws[-1][::1]/w0, np.abs(np.imag(strainFTs[-1][::1])), 'b')
+
+        #ax3.semilogy(ws[-1][::4]/w0, (np.real(stressFTs[-1][::4])), 'ro')
+        #ax4.semilogy(ws[-1][::4]/w0, (np.imag(stressFTs[-1][::4])), 'ro')
+        #ax3_twin.semilogy(ws[-1][::4]/w0, (np.real(strainFTs[-1][::4])), 'bo')
+        #ax4_twin.semilogy(ws[-1][::4]/w0, (np.imag(strainFTs[-1][::4])), 'bo')
+        #ax3.semilogy(ws[-1][::4]/w0, -(np.real(stressFTs[-1][::4])), 'ro', fillstyle='none')
+        #ax4.semilogy(ws[-1][::4]/w0, -(np.imag(stressFTs[-1][::4])), 'ro', fillstyle='none')
+        #ax3_twin.semilogy(ws[-1][::4]/w0, -(np.real(strainFTs[-1][::4])), 'bo', fillstyle='none')
+        #ax4_twin.semilogy(ws[-1][::4]/w0, -(np.imag(strainFTs[-1][::4])), 'bo', fillstyle='none')
+        ax3.set_xlim([0,10*3])
+        ax4.set_xlim([0,10*3])
+        ax3.set_ylim([3E-5, 2000])
+        ax3_twin.set_ylim([2E-8, 1])
+        ax4.set_ylim([1E-5, 1000])
+        ax4_twin.set_ylim([2E-7, 20])
+        ax3.xaxis.set_minor_locator(MultipleLocator(1))
+        ax3.tick_params(axis="x",which="both",direction="in",top="true")
+        ax4.xaxis.set_minor_locator(MultipleLocator(1))
+        ax4.tick_params(axis="x",which="both",direction="in",top="true")
+        fig3.suptitle(f"{amp}_real")
+        fig4.suptitle(f"{amp}_imag")
 
     # Gets LR and MAPS
     n1, n2, n3 = (5, 6, 9)
@@ -104,4 +152,4 @@ for k in range(1,9):
 # Save data
 data_all = np.array(data_all)
 np.save("maps_data", data_all)
-
+plt.show()

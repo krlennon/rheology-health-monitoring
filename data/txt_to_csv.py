@@ -3,7 +3,7 @@ import pandas as pd
 
 # Read file
 minutes = 5
-with open(f"maps_005Pa_02rads_{minutes}min.txt") as f:
+with open(f"maps/maps_005Pa_02rads_{minutes}min.txt") as f:
     text = f.read()
 
 text = text.split("[step]")
@@ -21,4 +21,4 @@ for exp in text[1:]:
     strains += [np.max(data[:,2])/100]
 
 for k in range(len(strains)):
-    pd.DataFrame(exps[k]).to_csv(f"maps_005Pa_2rads_{k+1}.csv", header=False, index=False)
+    pd.DataFrame(exps[k]).to_csv(f"maps/maps_005Pa_02rads_{k+1}.csv", header=False, index=False)
